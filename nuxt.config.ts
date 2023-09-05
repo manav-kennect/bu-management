@@ -21,9 +21,7 @@ export default defineNuxtConfig({
   hooks: {
     'vite:extendConfig': (config) => {
       config.plugins.push(
-        vuetify({
-          styles: { configFile: resolve('./assets/variables.scss') },
-        })
+        vuetify()
       )
     },
   },
