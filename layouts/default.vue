@@ -19,7 +19,7 @@
           <v-icon
             :icon="mdiCompassOutline"
             size="x-large"
-            :color="[item.state === 'active' ? 'bggreen' : '']"
+            :color="[item.state === 'active' ? 'bggreen' : 'grey']"
           ></v-icon>
         </v-list-item>
       </v-list>
