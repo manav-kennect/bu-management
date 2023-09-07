@@ -8,6 +8,13 @@ export default defineNuxtPlugin((nuxtApp) => {
       themes: {
         light: {
           colors: {
+            btnprimary: '#CCE8E8',
+            bggreen: '#00696C',
+            primary: '#EEEEEE',
+            activebtn: '#D4FFE5',
+            inactivebtn: '#FFDAD4',
+            primarybg: '#009e9b',
+            tabsbg: '#D3E3FF'
           },
         },
       },

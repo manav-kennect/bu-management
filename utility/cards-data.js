@@ -1,5 +1,5 @@
 export const bu_cards = [{
-    displayName: 'BU CARD !',
+    displayName: 'Paracetamol',
     buID: '1',
     description: '',
     Img: '',
@@ -29,7 +29,7 @@ export const bu_cards = [{
     buID: '2',
     description: '',
     Img: '',
-    state: 'active',
+    state: 'inactive',
     managers: {
         adhocManager: [
             {

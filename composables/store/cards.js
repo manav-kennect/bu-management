@@ -9,8 +9,13 @@ export const useCardsStore = defineStore('cards',{
     },
     actions: { 
          addNewBU(newBU) {
+            console.log(this.cardsData,"HHHHHHHHHHHHH")
             this.cardsData.push(newBU)
-            console.log(this.cardsData)
+            
+        },
+        searchCards(seachtext) {
+           this.fiteredCardData=searchFunc(seachtext,['buID','displayName'],this.cardsData)
+            console.log('INSIDE PININA',this.fiteredCardData)
         }
     }
 })

@@ -1,9 +1,11 @@
-export function searchFunc (searchText,filteredArray,searchKeys,searchArray) {
+export function searchFunc(searchText,searchKeys,searchArray) {
+    console.log("SEARCH STARTED")
     if (searchText.length === 0) {
-      filteredArray = searchArray;
+     let filteredArray = searchArray;
+      return filteredArray;
     }
     else {
-      filteredArray = []
+     let filteredArray = []
       const searchValArray = searchText.split(" ")
       // console.log(searchValArray)
       searchKeys.map(item => {
@@ -30,12 +32,13 @@ export function searchFunc (searchText,filteredArray,searchKeys,searchArray) {
         })
 
       })
+      return filteredArray;
     }
 }
 
 export function get_Arr_Of_ObjectByValue(arr, key, value) {
     let result = []
-    let pattern = new RegExp(`${value}`, "i")
+    let pattern = new RegExp(`^${value}`, "i")
     arr.map(obj=>{
         for (var prop in obj) {
           if (obj.hasOwnProperty(prop)) {
