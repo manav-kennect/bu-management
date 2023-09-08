@@ -11,22 +11,22 @@
           v-for="(item, i) in items"
           color="primarybg"
           :key="i"
-          class="pl-2 mt-2 ml-2 mb-4"
+          class="pl-3 mt-2 ml-2 mb-6"
           style="border-radius: 15px; width: 50px; height: 50px"
           :to="item.to"
           @click="handleRoute(i)"
         >
           <v-icon
-            :icon="mdiCompassOutline"
-            size="x-large"
-            :color="[item.state === 'active' ? 'bggreen' : 'grey']"
+            :icon="item.icon"
+            size="large"
+            :color="[(item.state === 'active')?'bggreen':'grey']"
           ></v-icon>
         </v-list-item>
       </v-list>
       <template v-slot:append>
         <v-divider></v-divider>
-        <div class="pl-3">
-          <v-btn :icon="mdiCompass" variant="plain" size="x-large"> </v-btn>
+        <div class="pl-1">
+          <v-btn :icon="mdiHomeOutline" variant="plain" size="x-large"> </v-btn>
         </div>
       </template>
     </v-navigation-drawer>

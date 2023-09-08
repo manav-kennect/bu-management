@@ -5,7 +5,7 @@
         ><div style="text-transform: capitalize">{{ text }}</div>
         <template v-slot:prepend>
           <v-icon
-            :icon="mdiStorePlus"
+            :icon="mdiPlus"
             size="x-large"
             density="compact"
             color="white"

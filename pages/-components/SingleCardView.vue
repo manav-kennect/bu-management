@@ -1,132 +1,111 @@
 <template>
-  <div class="pt-4 ma-0 bg-tabsbg card-view">
-    <div class="d-flex flex-row pa-8 justify-space-between">
-      <div><v-icon :icon="mdiChevronLeft" size="xxx-large"></v-icon></div>
-      <div class="ml-1 mr-2">
-        <v-avatar size="48" color="surface-variant"></v-avatar>
-      </div>
-      <div class="d-flex flex-column ml-2 mr-3">
-        <div class="mb-1">
-          {{ cardDetails["displayName"] }}
+    <div class="pt-4 ma-0 bg-tabsbg card-view">
+        <div class="d-flex flex-row pa-6 justify-space-between" style="width: 100%;">
+            <div class="d-flex flex-row"><v-icon :icon="mdiChevronLeft" size="xxx-large"></v-icon> <v-avatar size="48"
+                    color="surface-variant"></v-avatar>
+                <div class="d-flex flex-column  pl-4 ml-lg-1 mr-3">
+                    <div class="mb-1" style="font-weight: 600; font-family: 'Poppins';">
+                        {{ cardDetails["displayName"] }}
+                    </div>
+                    <div class="font-weight-medium" style="font-family: 'Poppins'; font-size: 14px; color:#444747">
+                        {{ cardDetails["buID"] }}
+                    </div>
+                </div>
+                <div class="ml-3 mr-10 ">
+                <v-chip :class="[
+                    'rounded-xl',
+                    'pl-1',
+                    'pr-2',
+                    'pt-3',
+                    'pb-3',
+                    cardDetails['state'] === 'active'
+                        ? 'bg-activebtn'
+                        : 'bg-inactivebtn',
+                ]" style="align-self: flex-end" density="compact" label text-color="black">
+                    <v-icon center :icon="mdiCircleMedium" class="ma-0"
+                        :color="cardDetails['state'] === 'active' ? 'green' : 'red'"></v-icon>
+                   <div class="text-capitalize font-weight-medium" style="font-size: 10px; font-family: 'Poppins';"> {{ cardDetails["state"] }}</div>
+                </v-chip>
+            </div>
+            </div>
+
+            
+            <div class=" pa-2 description_container" style="border:1px solid #A9ACAC">
+                <span class="d-inline-block text-truncate d-flex flex-row">
+                    <div class="font-weight-bold">Description:</div>
+                    ggggggggggggggggggggggggggggggggggggggggggfffffffffffffffffffffffffggggggggggggg
+                </span>
+            </div>
+            <div class="ml-3 ml-md-1">
+                <v-icon size="20" v-for="i in [mdiBlockHelper, mdiPaletteOutline, mdiInboxOutline, mdiPencilOutline]"
+                    @click="" :icon="i" class="mr-6"></v-icon>
+            </div>
         </div>
-        <div>
-          {{ cardDetails["buID"] }}
+        <div class="tabs-container">
+            <v-tabs v-model="tab" class="pa-0 ma-0" :selected-class="'active-class'" :hide-slider="true">
+                <v-tab v-for="(tabItem, index) in tabs" style="max-height: 44px; font-family: 'Poppins'; font-weight: 600;"  :key="tabItem"
+                    class="mr-2 rounded-lg bg-white ma-0 text-capitalize  elevation-1 transition-swing" ><div style="color:#444747 ;">
+                        {{
+                        tabItem }}
+                    </div></v-tab>
+            </v-tabs>
         </div>
-      </div>
-      <div class="ml-3 mr-10">
-        <v-chip
-          :class="[
-            'rounded-xl',
-            'pl-2',
-            'pr-2',
-            cardDetails['state'] === 'active'
-              ? 'bg-activebtn'
-              : 'bg-inactivebtn',
-          ]"
-          style="align-self: flex-end"
-          density="compact"
-          label
-          text-color="black"
-        >
-          <v-icon
-            start
-            :icon="mdiCircleMedium"
-            :color="cardDetails['state'] === 'active' ? 'green' : 'red'"
-          ></v-icon>
-          {{ cardDetails["state"] }}
-        </v-chip>
-      </div>
-      <div class="border pa-2 description_container">
-        <span class="d-inline-block text-truncate d-flex flex-row"
-          ><div class="font-weight-bold">Description:</div>
-          ggggggggggggggggggggggggggggggggggggggggggfffffffffffffffffffffffffggggggggggggg</span
-        >
-      </div>
-      <div class="ml-6">
-        <v-icon
-          :icon="mdiChevronLeft"
-          size="large"
-          v-for="i in [1, 2, 3, 4]"
-          class="mr-2"
-        ></v-icon>
-      </div>
     </div>
-    <div class="tabs-container">
-      <v-tabs
-        v-model="tab"
-        class="pa-0 ma-0"
-        :selected-class="'active-class'"
-        :hide-slider="true"
-        variant="outlined"
-      >
-        <v-tab
-          v-for="(tabItem, index) in tabs"
-          style="max-height: 40px"
-          :key="tabItem"
-          variant="outlined"
-          class="mr-2 rounded-lg bg-white ma-0"
-          >{{ tabItem }}</v-tab
-        >
-      </v-tabs>
+    <div>
+        <Transition>
+            <component :is="this.tabs[tab]"></component>
+        </Transition>
     </div>
-  </div>
-  <div>
-    <Transition>
-      <component :is="this.tabs[tab]"></component>
-    </Transition>
-  </div>
 </template>
 
 <script>
 import { mapState } from "pinia";
 import Managers from "./managers/Managers.vue";
 export default {
-  components: { Managers },
-  props: ["cardDetails"],
-  data() {
-    return {
-      tab: null,
-    };
-  },
-  computed: {
-    ...mapState(useTabsStore, ["tabs"]),
-  },
+    components: { Managers },
+    props: ["cardDetails"],
+    data() {
+        return {
+            tab: null,
+        };
+    },
+    computed: {
+        ...mapState(useTabsStore, ["tabs"]),
+    },
 };
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
 .active-class {
-  background-color: white;
-  border: 1px solid green;
-  border-bottom: 3px solid green;
+    background-color: white;
+    border: 1px solid green;
+    border-bottom: 3px solid green;
 }
 
 .card-view {
-  position: relative;
-  height: 150px;
-  border: 1px solid #ccc;
-  padding: 10px;
+    position: relative;
+    height: 173px;
+    border: 1px solid #ccc;
+    padding: 10px;
 }
 
 .tabs-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  position: absolute;
-  /* Position the div absolutely */
-  top: 130px;
-  left: 40px;
-  /* Align the div to the left of the container */
-  /* Make the div span the full width of the container */
-  /* Add a background color for visibility */
-  padding: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: absolute;
+    top: 147px;
+    left: 40px;
+    padding: 0px;
 }
 
 .description_container {
-  max-width: 507px;
-  border-radius: 8px;
-
-  margin-left: 220px;
-  margin-right: 100px;
+    width: 507px;
+    min-width: 300px;
+    border-radius: 8px;
+    margin-left: 200px;
+    margin-right: 50px;
 }
 </style>

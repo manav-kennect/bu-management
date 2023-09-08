@@ -7,20 +7,15 @@ export const useNavStore = defineStore('navItems',{
                 state: 'inactive',
                 to: '/',
             }, {
-                icon: mdiCompass,
+                icon: mdiDomain,
                 state: 'inactive',
                 to: '/bu-manager',
             }, {
-                icon: mdiCompass,
+                icon: mdiBadgeAccountHorizontalOutline,
                 state: 'inactive',
                 to: '/',
             }, {
-                icon: mdiCompass,
-                state: 'inactive',
-                to: '/',
-            },
-            {
-                icon: mdiCompass,
+                icon: mdiCogOutline,
                 state: 'inactive',
                 to: '/',
             },

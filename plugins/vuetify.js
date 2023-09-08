@@ -14,7 +14,8 @@ export default defineNuxtPlugin((nuxtApp) => {
             activebtn: '#D4FFE5',
             inactivebtn: '#FFDAD4',
             primarybg: '#009e9b',
-            tabsbg: '#D3E3FF'
+            tabsbg: '#D3E3FF',
+            tonalbg: '#F5F5F5'
           },
         },
       },

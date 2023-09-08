@@ -1,58 +1,61 @@
 <template>
   <v-card class="mx-auto bg-white rounded-lg" min-width="600" min-height="450">
-    <v-card-title>
-      <div class="d-flex flex-row w-100" style="justify-content: space-between">
+    <v-card-title class="pl-0 pr-0">
+      <div class="d-flex flex-row w-100 h-100 pl-6 pr-4" style="justify-content: space-between; min-height: 43px;">
         <div>Create New Business Unit</div>
         <div>
           <v-btn
-            :icon="mdiClose"
-            density="compact"
             color="inactivebtn"
+            style="border-radius:5px;"
             end
-            size="medium"
+            size="30"
+            elevation="0"
             @click="$emit('closeDialog')"
-          ></v-btn>
+          >
+        <v-icon  :icon="mdiClose" size="18"> </v-icon></v-btn>
         </div>
       </div>
       <div>
-        <v-divider></v-divider>
+        <v-divider class="w-100"></v-divider>
       </div>
     </v-card-title>
     <v-card-text>
       <div>
         <div class="d-flex flex-row mb-5">
           <div class="w-50 mr-5">
-            <label>Display Name</label>
+            <label class="text-label-display">Display Name</label>
             <v-text-field
-              variant="outlined"
-              label="Enter Display Name"
+              variant="flat"
+              density="compact"
               single-line
-              class="mt-1 h-10"
+              :hide-details="true"
+              central-affix
+              class="mt-1 h-10 rounded-lg border text-space"
               v-model="newBu.displayName"
-            ></v-text-field>
+            ><div class="text-box-label"> Enter Display Name</div></v-text-field>
           </div>
 
-          <div class="w-50 mr-5">
-            <label>Business Unit ID</label>
+          <div class="w-50 mr-0">
+            <label class="text-label-display">Business Unit ID</label>
             <v-text-field
-              variant="outlined"
-              label="Enter ID"
+            density="compact"
+            variant="flat"
               single-line
-              class="mt-1 h-10"
+              class="mt-1 h-10 rounded-lg border text-space "
               v-model="newBu.buID"
-            ></v-text-field>
+            ><div class="text-box-label">Enter ID</div></v-text-field>
           </div>
         </div>
-        <div>
-          <div>
-            <label>Description</label>
+        <div class="mt-10">
+          <div class="pt-10">
+            <label class="text-label-display">Description</label>
             <v-text-field
-              variant="outlined"
-              label="Enter Description"
+              variant="flat"
+              :hide-details="true"
               single-line
-              class="mt-1"
+              class="mt-1 rounded-lg border description-text-space"
               v-model="newBu.description"
-            ></v-text-field>
+            ><div class="text-box-label">Enter Description</div></v-text-field>
           </div>
         </div>
       </div>
@@ -86,4 +89,29 @@ export default {
   mounted() {},
 };
 </script>
-<style></style>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+.text-label-display {
+    color: #444747;
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.text-box-label {
+    color:#8E9191;
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 14px;
+}
+.text-space {
+    max-width: 289px;
+    height: 40px;
+    font-family: 'Poppins';
+}
+
+.description-text-space {
+    min-height: 80px;
+}
+</style>
