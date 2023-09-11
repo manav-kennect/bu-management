@@ -5,17 +5,21 @@ export const useNavStore = defineStore('navItems',{
             {
                 icon: mdiCompassOutline,
                 state: 'inactive',
+                name: '',
                 to: '/',
             }, {
                 icon: mdiDomain,
+                name: 'Business Unit Management',
                 state: 'inactive',
-                to: '/bu-manager',
+                to: '/bu-management',
             }, {
                 icon: mdiBadgeAccountHorizontalOutline,
                 state: 'inactive',
+                name: '',
                 to: '/',
             }, {
                 icon: mdiCogOutline,
+                name: '',
                 state: 'inactive',
                 to: '/',
             },

@@ -14,7 +14,7 @@
           class="pl-3 mt-2 ml-2 mb-6"
           style="border-radius: 15px; width: 50px; height: 50px"
           :to="item.to"
-          @click="handleRoute(i)"
+          @click="handleRoute(i,item)"
         >
           <v-icon
             :icon="item.icon"
@@ -35,7 +35,7 @@
       class="d-flex align-center px-8 py-2 elevation-0 right-window"
       style="border-bottom: 1px solid var(--palette-neutral-90, #e1e3e2)"
     >
-      <h2 class="app-title">Business Unit Management</h2>
+      <h2 class="app-title">{{ pageTitle }}</h2>
       <v-spacer />
 
       <v-btn
@@ -72,7 +72,7 @@ export default {
   data() {
     return {
       drawer: true,
-
+      pageTitle: '',
       miniVariant: true,
       right: true,
       rightDrawer: false,
@@ -83,9 +83,21 @@ export default {
   },
   methods: {
     ...mapActions(useNavStore, ["updateNavItemState"]),
-    handleRoute(i) {
-      this.updateNavItemState(i);
+    handleRoute(i,item) {  
+      this.updateNavItemState(i);  
+      this.pageTitle = item.name
     },
+  },
+  mounted() {
+    console.log(this.$route.fullPath)
+    const route  = this.$route.name
+    this.items.map((item)=>{
+        if(item.to === this.$route.fullPath) {
+            item.state = 'active'
+            this.pageTitle = item.name
+
+        }
+    })
   },
 };
 </script>
@@ -93,8 +105,8 @@ export default {
 <style>
 .container {
   display: flex;
-  flex-direction: column; /* Optional: To arrange items horizontally */
-  align-items: flex-start; /* Align items to the start (left) */
+  flex-direction: column; 
+  align-items: flex-start; 
 }
 .account_btn {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

@@ -7,7 +7,7 @@
           <v-btn
             color="inactivebtn"
             style="border-radius:5px;"
-            end
+            end 
             size="30"
             elevation="0"
             @click="$emit('closeDialog')"
@@ -32,7 +32,7 @@
               central-affix
               class="mt-1 h-10 rounded-lg border text-space"
               v-model="newBu.displayName"
-            ><div class="text-box-label"> Enter Display Name</div></v-text-field>
+            ><template v-slot:label><div class="text-box-label"> Enter Display Name</div></template></v-text-field>
           </div>
 
           <div class="w-50 mr-0">
@@ -43,10 +43,10 @@
               single-line
               class="mt-1 h-10 rounded-lg border text-space "
               v-model="newBu.buID"
-            ><div class="text-box-label">Enter ID</div></v-text-field>
+            ><template v-slot:label><div class="text-box-label">Enter ID</div></template></v-text-field>
           </div>
         </div>
-        <div class="mt-10">
+        <div class="mt-6">
           <div class="pt-10">
             <label class="text-label-display">Description</label>
             <v-text-field
@@ -55,7 +55,7 @@
               single-line
               class="mt-1 rounded-lg border description-text-space"
               v-model="newBu.description"
-            ><div class="text-box-label">Enter Description</div></v-text-field>
+            ><template v-slot:label><div class="text-box-label">Enter Description</div></template></v-text-field>
           </div>
         </div>
       </div>
@@ -63,7 +63,7 @@
     <v-card-actions>
       <div class="d-flex flex-row-reverse w-100 pr-5 pb-5">
         <div class="w-10">
-          <v-btn class="bg-blue" @click="this.saveNewBU()">Save</v-btn>
+          <v-btn class="bg-bggreen pl-8 pr-8 rounded-lg" @click="this.saveNewBU()">Save</v-btn>
         </div>
       </div>
     </v-card-actions>
