@@ -25,7 +25,7 @@
           <div class="w-50 mr-5">
             <label class="text-label-display">Display Name</label>
             <v-text-field
-              variant="flat"
+              variant="default"
               density="compact"
               single-line
               :hide-details="true"
@@ -39,7 +39,7 @@
             <label class="text-label-display">Business Unit ID</label>
             <v-text-field
             density="compact"
-            variant="flat"
+            variant="default"
               single-line
               class="mt-1 h-10 rounded-lg border text-space "
               v-model="newBu.buID"
@@ -50,7 +50,7 @@
           <div class="pt-10">
             <label class="text-label-display">Description</label>
             <v-text-field
-              variant="flat"
+            variant="default"
               :hide-details="true"
               single-line
               class="mt-1 rounded-lg border description-text-space"
@@ -90,7 +90,6 @@ export default {
 };
 </script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
 
 .text-label-display {
     color: #444747;

@@ -48,11 +48,12 @@
         </div>
       </div>
 
-      <div class="pa-2 description_container" style="border: 1px solid #a9acac">
-        <span class="d-inline-block text-truncate d-flex flex-row">
-          <div class="font-weight-bold">Description:</div>
-          ggggggggggggggggggggggggggggggggggggggggggfffffffffffffffffffffffffggggggggggggg
-        </span>
+      <div class="px-3 pt-0 description_container" style="border: 1px solid #a9acac">
+        <!-- <div class="d-inline-block" style="overflow: scroll;"> -->
+          
+         <p class=" collapse-container"><span class="font-weight-bold">Description:</span>gggggggggggggggggggggggggggggggggggggsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssgggggffffffffffffffffffffbbbbfffffggggggggggggg</p>
+        <!-- </div> -->
+       
       </div>
       <div class="ml-3 ml-md-1">
         <customDialog
@@ -91,7 +92,7 @@
       >
         <v-tab
           v-for="(tabItem, index) in tabs"
-          style="max-height: 44px; font-family: 'Poppins'; font-weight: 600"
+          style="max-height: 44px; font-family: Poppins; font-weight: 600"
           :key="tabItem"
           class="mr-2 rounded-lg bg-white ma-0 text-capitalize elevation-1 transition-swing"
           ><div style="color: #444747">
@@ -105,7 +106,7 @@
     <Transition>
       <component :is="this.tabs[tab]"></component>
     </Transition>
-  </div>
+  </div> 
 </template>
 
 <script>
@@ -113,8 +114,9 @@ import { mapState } from "pinia";
 import Managers from "./managers/Managers.vue";
 import customDialog from "../components/common/customDialog.vue";
 import Deactivate from "./Deactivate.vue";
+import Employees from './Employees.vue'
 export default {
-  components: { Managers, customDialog },
+  components: { Managers, customDialog, Employees },
   props: ["cardDetails"],
   data() {
     return {
@@ -157,8 +159,17 @@ export default {
 .description_container {
   width: 507px;
   min-width: 300px;
+  height: 52px;
   border-radius: 8px;
   margin-left: 200px;
   margin-right: 50px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+}
+
+.collapse-container {
+  overflow-wrap: anywhere;
+  text-overflow: ellipsis;
 }
 </style>

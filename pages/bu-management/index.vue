@@ -7,7 +7,7 @@
           central-affix
           density="compact"
           class="rounded-lg border-md search-bar"
-          variant="flat"
+          :variant="'default'"
           single-line
           :hide-details="true"
           :prepend-inner-icon="mdiMagnify"
@@ -179,7 +179,6 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap");
 
 .input-label {
   color: #8e9191;

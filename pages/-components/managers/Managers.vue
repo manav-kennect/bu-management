@@ -19,13 +19,13 @@
             <v-icon :icon="mdiPlus" density="compact" end size="small"></v-icon>
           </v-col>
         </v-row>
-        <v-row class="managers-list mt-10">
+        <v-row class="managers-list mt-10 ">
           <v-card
-            class="ml-0 overflow-y-auto mr-5 pa-0 w-100 manager-list-scroll"
+            class="ml-0  mr-5 pa-0 w-100 overflow-y-auto manager-list-scroll "
             elevation="0"
             max-height="50vh"
           >
-            <v-list class="scheme-list pt-0">
+            <v-list class="pt-0 overflow-y-auto ">
               <v-list-item
                 v-for="(item, i) in [1, 2, 3, 4, 5, 67, 7, 8, 9, 2, 3, 4, 5]"
                 :key="i"
@@ -120,21 +120,43 @@ export default {
 
 .managers-list {
   min-width: inherit;
+
+}
+
+.manager-list-scroll {
+  mask-image: linear-gradient(to top, transparent, black),
+    linear-gradient(to left, transparent 17px, black 17px);
+  mask-size: 100% 20000px;
+  mask-position: left bottom;
+  -webkit-mask-image: linear-gradient(to top, transparent, black),
+    linear-gradient(to left, transparent 17px, black 17px);
+  -webkit-mask-size: 100% 20000px;
+  -webkit-mask-position: left bottom;
+  transition: mask-position 0.3s, -webkit-mask-position 0.3s;
+}
+
+.manager-list-scroll:hover {
+  -webkit-mask-position: left top;
 }
 
 .manager-list-scroll::-webkit-scrollbar {
   background-color: transparent;
-  padding-top: 55px;
+
 }
+
+.manager-list-scroll::-webkit-scrollbar-track {
+}
+
 .manager-list-scroll::-webkit-scrollbar-thumb {
-  max-height: 20px;
-  border-radius: 8px;
-  background-color: #c4c7c6;
+  background: #c4c7c6;
+  width: 14px;
+  border-radius: 20px;
 }
 
 .manager-list-scroll::-webkit-scrollbar-thumb:hover {
-  max-height: 2px;
+  background: rgb(25,25,25);
+    border: 1px solid rgb(0,0,0);
+    max-width: 2px;
   border-radius: 8px;
-  background-color: black;
 }
 </style>

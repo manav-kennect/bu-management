@@ -5,7 +5,7 @@
         class="d-flex flex-row w-100 h-100 pl-6 pr-4"
         style="justify-content: space-between; min-height: 43px"
       >
-        <div>Deactivate Business Unit</div>
+        <div style="font-family: Poppins; font-size: 19px;">Deactivate Business Unit</div>
         <div>
           <v-btn
             color="inactivebtn"
@@ -23,20 +23,43 @@
         <v-divider class="w-100"></v-divider>
       </div>
     </v-card-title>
-    <v-card-text>
+    <v-card-text class="">
       Do you want to Deactivate {{ buName }} Business Unit ?
     </v-card-text>
+    <v-card-actions>
+      <div class="d-flex flex-row justify-space-between w-100 pr-5 pb-5">
+        <div class="w-10 ml-5">
+          <v-btn class="bg-white pl-8 pr-8 rounded-lg btn-style " variant="outlined" @click="this.saveNewBU()">Cancel</v-btn>
+        </div>
+        <div class="w-10">
+          <v-btn class="bg-bggreen pl-8 pr-8 rounded-lg  btn-style"  @click="this.saveNewBU()">Deactivate</v-btn>
+        </div>
+      </div>
+    </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import {mapActions } from 'pinia'
 export default {
   props: ["buName"],
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    ...mapActions(useCardsStore, ["addNewBU"]),
+    saveNewBU: function () {
+      this.addNewBU(this.newBu);
+      this.$emit("closeDialog");
+    },
+  },
 };
 </script>
 
-<style></style>
+<style>
+
+.btn-style {
+    font-weight: 600;
+    font-size: 14px;
+}
+</style>

@@ -1,9 +1,28 @@
 import { createVuetify } from 'vuetify';
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg';
-
+import { VDataTable } from 'vuetify/labs/VDataTable';
 export default defineNuxtPlugin((nuxtApp) => {
   const vuetify = createVuetify({
     ssr: true,
+    components: {
+      VDataTable,
+    },
+    defaults:{
+        VBtn: {
+            style: 'text-transform: capitalize; font-family: Poppins;',
+          },
+        VTextField: {
+            style: 'text-transform: capitalize; font-family: Poppins;',
+        },
+        VCard: {
+            VCardTitle: {
+                style: 'font-family: Poppins;font-weight: 400; font-size:19px;'
+            },
+            VCardText: {
+                style: 'font-family: Poppins; font-weight: 400; font-size:16px;'
+            }
+        }
+    },
     theme: {
       themes: {
         light: {
