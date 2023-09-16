@@ -1,12 +1,7 @@
 <template>
-    <v-container fluid class="mt-12 ml-5 " style="min-height: 430px">
-        <v-row>
-            hiiiiiiiiiiiiii
-        </v-row>
-        <v-row>  
+    
             <BUDataTable :headers="headers" :items="this.items" :tabletype="'Emoployees'"></BUDataTable>
-        </v-row>
-    </v-container>
+        
 </template>
 
 <script>
@@ -24,6 +19,94 @@ export default {
                 { key: "Valid_Till", sortable: false, align: "end" },],
             items: [
                 {
+                    Name: 1,
+                    Territory: "Manav Pathak",
+                    Department: "10",
+                    Sales_Lead: "5000 Rs",
+                    Level: 10,
+                    Valid_from: "",
+                    Valid_Till: ''
+                },{
+                    Name: 1,
+                    Territory: "Manav Pathak",
+                    Department: "10",
+                    Sales_Lead: "5000 Rs",
+                    Level: 10,
+                    Valid_from: "",
+                    Valid_Till: ''
+                },{
+                    Name: 1,
+                    Territory: "Manav Pathak",
+                    Department: "10",
+                    Sales_Lead: "5000 Rs",
+                    Level: 10,
+                    Valid_from: "",
+                    Valid_Till: ''
+                },{
+                    Name: 1,
+                    Territory: "Manav Pathak",
+                    Department: "10",
+                    Sales_Lead: "5000 Rs",
+                    Level: 10,
+                    Valid_from: "",
+                    Valid_Till: ''
+                },{
+                    Name: 1,
+                    Territory: "Manav Pathak",
+                    Department: "10",
+                    Sales_Lead: "5000 Rs",
+                    Level: 10,
+                    Valid_from: "",
+                    Valid_Till: ''
+                },{
+                    Name: 1,
+                    Territory: "Manav Pathak",
+                    Department: "10",
+                    Sales_Lead: "5000 Rs",
+                    Level: 10,
+                    Valid_from: "",
+                    Valid_Till: ''
+                },{
+                    Name: 1,
+                    Territory: "Manav Pathak",
+                    Department: "10",
+                    Sales_Lead: "5000 Rs",
+                    Level: 10,
+                    Valid_from: "",
+                    Valid_Till: ''
+                },{
+                    Name: 1,
+                    Territory: "Manav Pathak",
+                    Department: "10",
+                    Sales_Lead: "5000 Rs",
+                    Level: 10,
+                    Valid_from: "",
+                    Valid_Till: ''
+                },{
+                    Name: 1,
+                    Territory: "Manav Pathak",
+                    Department: "10",
+                    Sales_Lead: "5000 Rs",
+                    Level: 10,
+                    Valid_from: "",
+                    Valid_Till: ''
+                },{
+                    Name: 1,
+                    Territory: "Manav Pathak",
+                    Department: "10",
+                    Sales_Lead: "5000 Rs",
+                    Level: 10,
+                    Valid_from: "",
+                    Valid_Till: ''
+                },{
+                    Name: 1,
+                    Territory: "Manav Pathak",
+                    Department: "10",
+                    Sales_Lead: "5000 Rs",
+                    Level: 10,
+                    Valid_from: "",
+                    Valid_Till: ''
+                },{
                     Name: 1,
                     Territory: "Manav Pathak",
                     Department: "10",

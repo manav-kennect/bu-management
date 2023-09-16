@@ -1,112 +1,161 @@
 <template>
-  <div class="pt-4 ma-0 bg-tabsbg card-view">
-    <div class="d-flex flex-row pa-6 justify-space-between" style="width: 100%">
-      <div class="d-flex flex-row">
-        <v-icon :icon="mdiChevronLeft" size="xxx-large"></v-icon>
-        <v-avatar size="48" color="surface-variant"></v-avatar>
-        <div class="d-flex flex-column pl-4 ml-lg-1 mr-3">
-          <div class="mb-1" style="font-weight: 600; font-family: 'Poppins'">
-            {{ cardDetails["displayName"] }}
-          </div>
-          <div
-            class="font-weight-medium"
-            style="font-family: 'Poppins'; font-size: 14px; color: #444747"
-          >
-            {{ cardDetails["buID"] }}
-          </div>
-        </div>
-        <div class="ml-3 mr-10">
-          <v-chip
-            :class="[
-              'rounded-xl',
-              'pl-1',
-              'pr-2',
-              'pt-3',
-              'pb-3',
-              cardDetails['state'] === 'active'
-                ? 'bg-activebtn'
-                : 'bg-inactivebtn',
-            ]"
-            style="align-self: flex-end"
-            density="compact"
-            label
-            text-color="black"
-          >
-            <v-icon
-              center
-              :icon="mdiCircleMedium"
-              class="ma-0"
-              :color="cardDetails['state'] === 'active' ? 'green' : 'red'"
-            ></v-icon>
-            <div
-              class="text-capitalize font-weight-medium"
-              style="font-size: 10px; font-family: 'Poppins'"
-            >
-              {{ cardDetails["state"] }}
+  <div class="d-flex flex-column">
+    <div class="pt-4 ma-0 bg-tabsbg card-view">
+      <div class="d-flex flex-row pa-6 pr-0 justify-space-between">
+        <div class="d-flex flex-row">
+          <v-icon :icon="mdiChevronLeft" size="xxx-large"></v-icon>
+          <v-avatar size="48" color="surface-variant"></v-avatar>
+          <div class="d-flex flex-column pl-4 ml-lg-1 mr-3">
+            <div class="mb-1" style="font-weight: 600; font-family: 'Poppins'">
+              {{ cardDetails["displayName"] }}
             </div>
-          </v-chip>
+            <div
+              class="font-weight-medium"
+              style="font-family: 'Poppins'; font-size: 14px; color: #444747"
+            >
+              {{ cardDetails["buID"] }}
+            </div>
+          </div>
+          <div class="ml-3 mr-10">
+            <v-chip
+              :class="[
+                'rounded-xl',
+                'pl-1',
+                'pr-2',
+                'pt-3',
+                'pb-3',
+                cardDetails['state'] === 'active'
+                  ? 'bg-activebtn'
+                  : 'bg-inactivebtn',
+              ]"
+              style="align-self: flex-end"
+              density="compact"
+              label
+              text-color="black"
+            >
+              <v-icon
+                center
+                :icon="mdiCircleMedium"
+                class="ma-0"
+                :color="cardDetails['state'] === 'active' ? 'green' : 'red'"
+              ></v-icon>
+              <div
+                class="text-capitalize font-weight-medium"
+                style="font-size: 10px; font-family: 'Poppins'"
+              >
+                {{ cardDetails["state"] }}
+              </div>
+            </v-chip>
+          </div>
+        </div>
+
+        <div
+          :class="[
+            'pl-3 pr-3',
+            'py-0',
+            !readMore ? 'description_container' : 'description_container_bloom',
+          ]"
+          style="border: 1px solid #a9acac"
+        >
+          <p class="collapse-container">
+            <span
+              class="font-weight-bold mr-1"
+              style="font-family: Poppins; font-size: 14px"
+              >Description:</span
+            ><span class="read-less"
+              >Hi my name is manav! And i am working at kennect 
+              private limited. And this is a tough thing to solve. I have been doing this ssdsss <span
+                v-if="!readMore"
+                style="
+                  position: fixed;
+                  font-weight: bold;
+                  margin-top: 4px;
+                  margin-left: 5px;
+                  border-bottom: black solid 2px;
+                  max-height: 15px;
+                "
+                ><button
+                  style="color: black; font-weight: bold; font-size: 12px;"
+                  @click="handleDescription()"
+                >
+                  view more
+                </button></span
+              ></span
+            ><span :class="[readMore ? 'read-more_active' : 'read-more']"
+              >ffsssssssssssg ggggffffffffffffffffb bbbfffffgggggggggggggbhhhjggygy jhhuh hhhhi gyguyussssssssssssssssssss<span
+                v-if="readMore"
+                style="
+                  position: fixed;
+                  margin-left: 5px;
+                  margin-top: 4px;
+                  font-weight: bold;
+                  border-bottom: black solid 2px;
+                  max-height: 15px;
+                "
+                ><button
+                  style="color: black; font-weight: bold; font-size: 12px;"
+                  @click="handleDescription()"
+                >
+                  view less
+                </button></span
+              ></span
+            >
+          </p>
+        </div>
+        <div class="ml-3 ml-md-1 pr-6">
+          <customDialog
+            v-for="(i, index) in [
+              mdiBlockHelper,
+              mdiPaletteOutline,
+              mdiInboxOutline,
+              mdiPencilOutline,
+            ]"
+          >
+            <template v-slot:toggler="slotProp">
+              <v-icon
+                size="20"
+                @click=""
+                :icon="i"
+                class="mr-4"
+                v-bind="slotProp.activate"
+              ></v-icon>
+            </template>
+            <template v-slot:default="slotProp">
+              <component
+                :is="this.buConfigModals[index]"
+                :buName="cardDetails['displayName']"
+                @closeDialog="slotProp.closeDialog"
+              ></component>
+            </template>
+          </customDialog>
         </div>
       </div>
-
-      <div class="px-3 pt-0 description_container" style="border: 1px solid #a9acac">
-        <!-- <div class="d-inline-block" style="overflow: scroll;"> -->
-          
-         <p class=" collapse-container"><span class="font-weight-bold">Description:</span>gggggggggggggggggggggggggggggggggggggsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssgggggffffffffffffffffffffbbbbfffffggggggggggggg</p>
-        <!-- </div> -->
-       
-      </div>
-      <div class="ml-3 ml-md-1">
-        <customDialog
-          v-for="(i, index) in [
-            mdiBlockHelper,
-            mdiPaletteOutline,
-            mdiInboxOutline,
-            mdiPencilOutline,
-          ]"
+      <div class="tabs-container">
+        <v-tabs
+          v-model="tab"
+          class="pa-0 ma-0"
+          :selected-class="'active-class'"
+          :hide-slider="true"
         >
-          <template v-slot:toggler="slotProp">
-            <v-icon
-              size="20"
-              @click=""
-              :icon="i"
-              class="mr-6"
-              v-bind="slotProp.activate"
-            ></v-icon>
-          </template>
-          <template v-slot:default="slotProp">
-            <component
-              :is="this.buConfigModals[index]"
-              :buName="cardDetails['displayName']"
-              @closeDialog="slotProp.closeDialog"
-            ></component>
-          </template>
-        </customDialog>
+          <v-tab
+            v-for="(tabItem, index) in tabs"
+            style="max-height: 44px; font-family: Poppins; font-weight: 600"
+            :key="tabItem"
+            class="mr-2 rounded-lg bg-white ma-0 text-capitalize elevation-1 transition-swing"
+          >
+            <div style="color: #444747">
+              {{ tabItem }}
+            </div>
+          </v-tab>
+        </v-tabs>
       </div>
     </div>
-    <div class="tabs-container">
-      <v-tabs
-        v-model="tab"
-        class="pa-0 ma-0"
-        :selected-class="'active-class'"
-        :hide-slider="true"
-      >
-        <v-tab
-          v-for="(tabItem, index) in tabs"
-          style="max-height: 44px; font-family: Poppins; font-weight: 600"
-          :key="tabItem"
-          class="mr-2 rounded-lg bg-white ma-0 text-capitalize elevation-1 transition-swing"
-          ><div style="color: #444747">
-            {{ tabItem }}
-          </div></v-tab
-        >
-      </v-tabs>
+    <div>
+      <Transition>
+        <component :is="this.tabs[tab]" :buID="cardDetails.buID"></component>
+      </Transition>
     </div>
   </div>
-  <div>
-    <Transition>
-      <component :is="this.tabs[tab]"></component>
-    </Transition>
-  </div> 
 </template>
 
 <script>
@@ -114,7 +163,7 @@ import { mapState } from "pinia";
 import Managers from "./managers/Managers.vue";
 import customDialog from "../components/common/customDialog.vue";
 import Deactivate from "./Deactivate.vue";
-import Employees from './Employees.vue'
+import Employees from "./Employees.vue";
 export default {
   components: { Managers, customDialog, Employees },
   props: ["cardDetails"],
@@ -122,7 +171,14 @@ export default {
     return {
       tab: null,
       buConfigModals: [Deactivate, null, null, null],
+      readMore: false,
     };
+  },
+  methods: {
+    handleDescription() {
+      this.readMore = !this.readMore;
+      console.log(this.readMore);
+    },
   },
   computed: {
     ...mapState(useTabsStore, ["tabs"]),
@@ -131,8 +187,6 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap");
-
 .active-class {
   background-color: white;
   border: 1px solid green;
@@ -141,9 +195,11 @@ export default {
 
 .card-view {
   position: relative;
+  width: 100%;
   height: 173px;
   border: 1px solid #ccc;
   padding: 10px;
+  padding-right: 0px;
 }
 
 .tabs-container {
@@ -157,19 +213,73 @@ export default {
 }
 
 .description_container {
-  width: 507px;
+  width: 515px;
   min-width: 300px;
   height: 52px;
   border-radius: 8px;
-  margin-left: 200px;
-  margin-right: 50px;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  margin-left: auto;
+  margin-right: 80px;
+  overflow: auto;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  transition: height 0.5s ease;
+  
+}
 
+.description_container_bloom {
+  width: 515px;
+  min-width: 300px;
+  height: 100px;
+  border-radius: 8px;
+  margin-left: auto;
+  margin-right: 80px;
+  overflow: auto;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  transition: height 0.2s ease;
 }
 
 .collapse-container {
-  overflow-wrap: anywhere;
-  text-overflow: ellipsis;
+  width: auto;
+  height: 92px;
+  min-width: 300px;
+  overflow: hidden;
+  padding: 0px 2px 0px 2px;
+  display: -webkit-box;
+  -webkit-line-break: after-white-space;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-line;
+  -webkit-box-orient: vertical;
+  text-transform: capitalize;
+}
+
+.read-more {
+  display: none;
+  min-width: auto;
+  width: 490px;
+  transition: display 3.0s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+
+  
+}
+
+.read-more_active {
+  display: auto;
+  width: 490px;
+  min-width: auto;
+  font-family: Poppins;
+  font-size: 12px;
+  font-weight: 600;
+  color: #444747;
+  transition: display 3.0s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+
+}
+
+.read-less {
+  max-height: 35px;
+  font-family: Poppins;
+  font-size: 12px;
+  font-weight: 600;
+  color: #444747;
 }
 </style>

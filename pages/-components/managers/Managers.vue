@@ -10,7 +10,7 @@
               flat
               density="compact"
               style="font-family: 'Poppins'; font-weight: 600"
-              :items="['All Managers', 'Employee', 'Adhoc Users']"
+              :items="['All Managers', 'Employee Managers', 'Adhoc Managers']"
               label="Select Managers"
               v-model="managerSelector"
             ></v-select>
@@ -25,12 +25,13 @@
             elevation="0"
             max-height="50vh"
           >
-            <v-list class="pt-0 overflow-y-auto ">
+            <v-list class="pt-0 overflow-y-auto " v-if="filteredManagersList.length>0">
               <v-list-item
-                v-for="(item, i) in [1, 2, 3, 4, 5, 67, 7, 8, 9, 2, 3, 4, 5]"
+                v-for="(manager, i) in filteredManagersList"
                 :key="i"
-                :value="item"
+                :value="manager"
                 class="rounded-lg pt-2 mb-4"
+                @click="selectedManager(manager)"
               >
                 <div class="d-flex flex-row pl-4">
                   <div class="mr-4 align-self-center">
@@ -41,13 +42,16 @@
                       class="font-weight-bold"
                       style="font-size:14px'; font-family:'Poppins'"
                     >
-                      Manager Name
+                      {{ manager.name }}
                     </div>
-                    <div class="">{{ item }}</div>
+                    <div class="">{{ manager.id }}</div>
                   </div>
                 </div>
               </v-list-item>
             </v-list>
+            <v-card-text>
+              Managers List Empty
+            </v-card-text>
           </v-card>
         </v-row>
       </v-col>
@@ -96,17 +100,50 @@
 </template>
 
 <script>
-export default {
+import { mapActions,mapState } from 'pinia';
+import { useManagerStore } from '~/composables/store/managers';
+
+export default { 
+  props: ['buID'],
   data() {
     return {
       managerSelector: "All Managers",
-    };
+      managersObject: {},
+      filteredManagersList: []
+    }
   },
   watch: {
     managerSelector() {
-      console.log(this.managerSelector);
+      this.filteredManagersList = this.filterManagers(this.managerSelector);
     },
   },
+  computed: {
+    ...mapState(useManagerStore,['managers'])
+  },
+  methods: {
+    ...mapActions(useManagerStore,['getManagersByBUID']),
+    filterManagers(managerType) {
+            if(managerType === 'All Managers') {
+                return [...this.managersObject.managers['adhocManager'],...this.managersObject.managers['employeeManager']]
+            }
+            else if (managerType === 'Adhoc Managers') {
+                return this.managersObject.managers['adhocManager']
+            }
+            else {
+                return this.managersObject.managers['employeeManager']
+            }
+        },
+        selectedManager(manager) {
+          console.log(manager)
+        }
+    
+  },
+  mounted()
+ {
+  this.managersObject=  this.getManagersByBUID(this.buID)
+  this.filteredManagersList= this.filterManagers(this.managerSelector)
+  console.log(this.filteredManagersList)
+ }
 };
 </script>
 
