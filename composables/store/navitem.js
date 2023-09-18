@@ -12,7 +12,8 @@ export const useNavStore = defineStore('navItems',{
                 name: 'Business Unit Management',
                 state: 'inactive',
                 to: '/bu-management',
-            }, {
+            }, 
+            {
                 icon: mdiBadgeAccountHorizontalOutline,
                 state: 'inactive',
                 name: '',

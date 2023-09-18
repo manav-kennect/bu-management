@@ -1,7 +1,10 @@
 <template>
-  <v-container v-if="!opencard" fluid fill-height class="pl-5 pt-8">
-    <v-row class="ml-3">
-      <v-col cols="auto">
+  <Transition :name="opencard?'outside-page':'inside-page'" mode="out-in">
+  <v-container v-if="!opencard" fluid fill-height class="pl-0 pt-8">
+    <v-row
+      class="ml-lg-5 ml-md-5 ml-sm-3 mr-xl-0 mr-lg-0 pl-xl-autp d-flex justify-space-between"
+    >
+      <v-col cols="auto" class="ml-auto pl-auto">
         <v-text-field
           v-model="searchText"
           central-affix
@@ -17,50 +20,57 @@
           ></v-text-field
         >
       </v-col>
-      <v-col cols="5" align-self="center" class="">
-        <v-btn class="bg-btnprimary">
+      <v-col cols="auto" align-self="center" class="">
+        <v-btn class="bg-btnprimary" elevation="0">
           <div style="text-transform: capitalize; font-weight: bold">
             Filter
           </div>
         </v-btn>
       </v-col>
-      <v-col align-self="center" class="d-flex flex-row-reverse pr-0 pr-5">
-        
+      <v-col align-self="center" class="d-flex flex-row-reverse">
         <customDialog :activator="false">
-            <template v-slot:toggler="slotProp">
-                <v-btn class="bg-bggreen rounded-lg" v-bind="slotProp.activate"
-          ><div style="text-transform: capitalize">Create BU</div>
-          <template v-slot:prepend>
-            <v-icon
-              :icon="mdiPlus"
-              size="x-large"
-              density="compact"
-              color="white"
-            ></v-icon> </template
-        ></v-btn>
-            </template>
+          <template v-slot:toggler="slotProp">
+            <v-btn
+              class="bg-bggreen rounded-lg"
+              elevation="0"
+              v-bind="slotProp.activate"
+              ><div style="text-transform: capitalize">Create BU</div>
+              <template v-slot:prepend>
+                <v-icon
+                  :icon="mdiPlus"
+                  size="x-large"
+                  density="compact"
+                  color="white"
+                ></v-icon> </template
+            ></v-btn>
+          </template>
           <template v-slot:default="slotProp">
             <CreateBU @closeDialog="slotProp.closeDialog"></CreateBU>
           </template>
         </customDialog>
       </v-col>
     </v-row>
-    <v-row class="mt-8 ml-1">
-      <v-row class=" pl-2 py-auto">
+    <v-row
+      class="mt-8 ml-lg-0 ml-xl-2 ml-md-5 ml-sm-auto mr-xl-0 mr-lg-3 pl-xl-12"
+    >
+      <TransitionGroup name="list" @enter="onEnter" :css="false" @leave="onLeave" @before-enter="onBeforeEnter">
         <v-col
           cols="2"
+          :sm="3"
           :md="2"
+          :lg="2"
           :xl="2"
-          class="pl-0 pr-0 ml-7 mr-3 mt-3"
+          class="pl-0 pr-0 ml-lg-9 ml-md-5 ml-xl-2 ml-sm-12 mr-lg-auto mr-xl-auto mt-3"
           v-for="(card, i) in fiteredCardData.length > 0
             ? fiteredCardData
             : cardsData"
           :key="i"
+          :data-index="i"
         >
           <v-card
             class="mx-auto rounded-lg"
             width="auto"
-            max-width="'400px'"
+            max-width="'600px'"
             min-width="100"
             min-height="240"
             @click="viewCard(i, card.buID)"
@@ -132,17 +142,19 @@
             </v-card-text>
           </v-card>
         </v-col>
-      </v-row>
+      </TransitionGroup>
     </v-row>
   </v-container>
-  <SingleCardView v-else :cardDetails="this.cardProps"></SingleCardView>
+  <SingleCardView v-else :cardDetails="this.cardProps" @handleBackButton="handleBackButton"></SingleCardView>
+</Transition>
 </template>
 
 <script>
 import { mapState, mapActions } from "pinia";
 import customDialog from "../../components/common/customDialog.vue";
-import CreateBU from "../-components/CreateBU.vue";
-import SingleCardView from "../-components/SingleCardView.vue";
+import CreateBU from "./-components/CreateBU.vue";
+import SingleCardView from "./-components/SingleCardView.vue";
+import gsap from 'gsap'
 
 export default {
   components: { customDialog, CreateBU, SingleCardView },
@@ -165,7 +177,29 @@ export default {
         this.opencard = true;
       }
     },
-
+    handleBackButton () {
+      this.opencard= false;
+    },
+    onBeforeEnter(el) {
+      el.style.opacity = 0
+      el.style.height = 0
+    },
+    onEnter(el, done) {
+      gsap.to(el, {
+        opacity: 1,
+        height: "1.6em",
+        delay: el.dataset.index * 0.05,
+        onComplete: done,
+      });
+    },
+    onLeave(el, done) {
+      gsap.to(el, {
+        opacity: 0,
+        height: '0',
+        delay: el.dataset.index * 0.05,
+        onComplete: done
+      })
+    }
   },
   watch: {
     searchText() {
@@ -179,7 +213,6 @@ export default {
 </script>
 
 <style>
-
 .input-label {
   color: #8e9191;
   font-family: "Poppins";
@@ -190,6 +223,7 @@ export default {
 
 .search-bar {
   width: 372px;
+  min-width: auto;
   height: 40px;
   font-family: "Poppins";
 }
@@ -201,4 +235,55 @@ export default {
 .card_text {
   color: #747877;
 }
+/* .inner-page-enter-to,
+.inner-page-leave-from {
+  opacity: 0;
+  transform: translateY(-80px);
+} */
+/* .inside-page-enter-to {
+  opacity:1;
+  transform: translateY(-100px);
+} */
+.inside-page-leave-from {
+  opacity:1;
+}
+.inside-page-leave-to {
+  opacity: 0;
+  transform: translateY(-100px);
+}
+
+.inside-page-leave-active {
+  transition: all 0.4s ease-out;
+}
+
+.inside-page-leave-from {
+  opacity:1;
+}
+
+.outside-page-leave-to {
+  opacity: 0;
+  transform: translateY(100px);
+}
+
+.outside-page-leave-active {
+  transition: all 0.4s ease-out;
+}
+
+
+
+/* list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+} */
+
+/* .list-enter-to,
+.list-leave-from {
+  opacity: 0;
+  transform: translateX(30px);
+} */
 </style>

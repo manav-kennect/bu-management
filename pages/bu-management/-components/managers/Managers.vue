@@ -1,31 +1,39 @@
 <template>
-  <v-container fluid class="mt-12 ml-5" style="min-height: 430px">
+  <v-container fluid class="mt-12 ml-5 pl-2" style="min-height: 430px">
     <v-row class="" style="min-height: inherit">
       <v-col style="max-width: 340px" class="ml-1">
         <v-row class="manager-container" justify="space-between">
           <v-col cols="9" class="ma-0">
-            <v-select
-              variant="solo"
-              single-line
-              flat
-              density="compact"
-              style="font-family: 'Poppins'; font-weight: 600"
-              :items="['All Managers', 'Employee Managers', 'Adhoc Managers']"
-              label="Select Managers"
-              v-model="managerSelector"
-            ></v-select>
+            <v-menu transition="slide-y-transition" elevation="0">
+              <template v-slot:activator="{ props }">
+                <v-btn   v-bind="props" elevation=0 style="font-family: 'Poppins'; font-weight: 600; font-size: 16px; color:#444747;">
+                  {{ managerSelector }}
+                  <template v-slot:append>
+                    <v-icon :icon="mdiChevronDown" density="compact" end :size="24"></v-icon>
+                  </template>
+                </v-btn>
+              </template>
+              <v-list>
+                <v-list-item v-for="(item, i) in ['All Managers', 'Employee Managers', 'Adhoc Managers']" :key="i">
+                  <v-list-item-title @click="onSelectItem(item)" style="font-family: 'Poppins'; font-weight: 600; font-size: 14px;">{{ item }}</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
           </v-col>
-          <v-col cols="3" class="pt-5 pr-5 d-flex justify-end">
-            <v-icon :icon="mdiPlus" density="compact" end size="small"></v-icon>
+          <v-col cols="3" class="pt-4 pr-5 d-flex justify-end">
+            <v-icon :icon="mdiPlus" density="compact" end :size="24"></v-icon>
           </v-col>
         </v-row>
-        <v-row class="managers-list mt-10 ">
+        <v-row class="managers-list mt-10">
           <v-card
-            class="ml-0  mr-5 pa-0 w-100 overflow-y-auto manager-list-scroll "
+            class="ml-0 mr-5 pa-0 w-100 overflow-y-auto manager-list-scroll"
             elevation="0"
             max-height="50vh"
           >
-            <v-list class="pt-0 overflow-y-auto " v-if="filteredManagersList.length>0">
+            <v-list
+              class="pt-0 overflow-y-auto"
+              v-if="filteredManagersList.length > 0"
+            >
               <v-list-item
                 v-for="(manager, i) in filteredManagersList"
                 :key="i"
@@ -39,19 +47,20 @@
                   </div>
                   <div>
                     <div
-                      class="font-weight-bold"
-                      style="font-size:14px'; font-family:'Poppins'"
+                      style="font-size:14px'; font-family:'Poppins'; font-weight:500;"
                     >
                       {{ manager.name }}
                     </div>
-                    <div class="">{{ manager.id }}</div>
+                    <div
+                      style="font-size:14px'; font-family:'Poppins'; font-weight:500; text-transform:capitalize; color:#444747"
+                    >
+                      {{ manager.role }}
+                    </div>
                   </div>
                 </div>
               </v-list-item>
             </v-list>
-            <v-card-text>
-              Managers List Empty
-            </v-card-text>
+            <v-card-text v-else> Managers List Empty </v-card-text>
           </v-card>
         </v-row>
       </v-col>
@@ -100,17 +109,17 @@
 </template>
 
 <script>
-import { mapActions,mapState } from 'pinia';
-import { useManagerStore } from '~/composables/store/managers';
+import { mapActions, mapState } from "pinia";
+import { useManagerStore } from "~/composables/store/managers";
 
-export default { 
-  props: ['buID'],
+export default {
+  props: ["buID"],
   data() {
     return {
       managerSelector: "All Managers",
       managersObject: {},
-      filteredManagersList: []
-    }
+      filteredManagersList: [],
+    };
   },
   watch: {
     managerSelector() {
@@ -118,32 +127,34 @@ export default {
     },
   },
   computed: {
-    ...mapState(useManagerStore,['managers'])
+    ...mapState(useManagerStore, ["managers"]),
   },
   methods: {
-    ...mapActions(useManagerStore,['getManagersByBUID']),
+    ...mapActions(useManagerStore, ["getManagersByBUID"]),
     filterManagers(managerType) {
-            if(managerType === 'All Managers') {
-                return [...this.managersObject.managers['adhocManager'],...this.managersObject.managers['employeeManager']]
-            }
-            else if (managerType === 'Adhoc Managers') {
-                return this.managersObject.managers['adhocManager']
-            }
-            else {
-                return this.managersObject.managers['employeeManager']
-            }
-        },
-        selectedManager(manager) {
-          console.log(manager)
-        }
-    
+      if (managerType === "All Managers") {
+        return [
+          ...this.managersObject.managers["adhocManager"],
+          ...this.managersObject.managers["employeeManager"],
+        ];
+      } else if (managerType === "Adhoc Managers") {
+        return this.managersObject.managers["adhocManager"];
+      } else {
+        return this.managersObject.managers["employeeManager"];
+      }
+    },
+    selectedManager(manager) {
+      console.log(manager);
+    },
+    onSelectItem(item) {
+      this.managerSelector = item;
+    }
   },
-  mounted()
- {
-  this.managersObject=  this.getManagersByBUID(this.buID)
-  this.filteredManagersList= this.filterManagers(this.managerSelector)
-  console.log(this.filteredManagersList)
- }
+  mounted() {
+    this.managersObject = this.getManagersByBUID(this.buID);
+    this.filteredManagersList = this.filterManagers(this.managerSelector);
+    console.log(this.filteredManagersList);
+  },
 };
 </script>
 
@@ -157,7 +168,6 @@ export default {
 
 .managers-list {
   min-width: inherit;
-
 }
 
 .manager-list-scroll {
@@ -178,7 +188,6 @@ export default {
 
 .manager-list-scroll::-webkit-scrollbar {
   background-color: transparent;
-
 }
 
 .manager-list-scroll::-webkit-scrollbar-track {
@@ -191,9 +200,9 @@ export default {
 }
 
 .manager-list-scroll::-webkit-scrollbar-thumb:hover {
-  background: rgb(25,25,25);
-    border: 1px solid rgb(0,0,0);
-    max-width: 2px;
+  background: rgb(25, 25, 25);
+  border: 1px solid rgb(0, 0, 0);
+  max-width: 2px;
   border-radius: 8px;
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
-  <div class="d-flex flex-column">
+  <div class="d-flex flex-column"  >
     <div class="pt-4 ma-0 bg-tabsbg card-view">
-      <div class="d-flex flex-row pa-6 pr-0 justify-space-between">
-        <div class="d-flex flex-row">
-          <v-icon :icon="mdiChevronLeft" size="xxx-large"></v-icon>
+      <div class="d-flex flex-row pa-6 pr-0 justify-space-between" >
+        <div class="d-flex flex-row ">
+          <v-icon :icon="mdiChevronLeft" size="xxx-large" @click="$emit('handleBackButton')"></v-icon>
           <v-avatar size="48" color="surface-variant"></v-avatar>
-          <div class="d-flex flex-column pl-4 ml-lg-1 mr-3">
+          <div class="d-flex flex-column pl-4 ml-lg-1 mr-lg-3 mr-md-0">
             <div class="mb-1" style="font-weight: 600; font-family: 'Poppins'">
               {{ cardDetails["displayName"] }}
             </div>
@@ -16,7 +16,7 @@
               {{ cardDetails["buID"] }}
             </div>
           </div>
-          <div class="ml-3 mr-10">
+          <div class="ml-lg-3 ml-md-2 mr-0">
             <v-chip
               :class="[
                 'rounded-xl',
@@ -52,7 +52,8 @@
         <div
           :class="[
             'pl-3 pr-3',
-            'py-0',
+            'my-lg-80',
+            'my-md-0',
             !readMore ? 'description_container' : 'description_container_bloom',
           ]"
           style="border: 1px solid #a9acac"
@@ -63,11 +64,10 @@
               style="font-family: Poppins; font-size: 14px"
               >Description:</span
             ><span class="read-less"
-              >Hi my name is manav! And i am working at kennect 
-              private limited. And this is a tough thing to solve. I have been doing this ssdsss <span
+              >Hi I am manav pathak from Panna (m.p). This look me a very long time to build..If You know any other way then please lemme know<span
                 v-if="!readMore"
                 style="
-                  position: fixed;
+                  position: absolute;
                   font-weight: bold;
                   margin-top: 4px;
                   margin-left: 5px;
@@ -85,7 +85,7 @@
               >ffsssssssssssg ggggffffffffffffffffb bbbfffffgggggggggggggbhhhjggygy jhhuh hhhhi gyguyussssssssssssssssssss<span
                 v-if="readMore"
                 style="
-                  position: fixed;
+                  position: absolute;
                   margin-left: 5px;
                   margin-top: 4px;
                   font-weight: bold;
@@ -102,7 +102,7 @@
             >
           </p>
         </div>
-        <div class="ml-3 ml-md-1 pr-6">
+        <div class="ml-3 ml-md-1 ">
           <customDialog
             v-for="(i, index) in [
               mdiBlockHelper,
@@ -116,7 +116,7 @@
                 size="20"
                 @click=""
                 :icon="i"
-                class="mr-4"
+                class="mr-md-5 mr-lg-7 mr-sm-3"
                 v-bind="slotProp.activate"
               ></v-icon>
             </template>
@@ -141,7 +141,7 @@
             v-for="(tabItem, index) in tabs"
             style="max-height: 44px; font-family: Poppins; font-weight: 600"
             :key="tabItem"
-            class="mr-2 rounded-lg bg-white ma-0 text-capitalize elevation-1 transition-swing"
+            class="mr-3 rounded-lg bg-white ma-0 text-capitalize elevation-1 transition-swing"
           >
             <div style="color: #444747">
               {{ tabItem }}
@@ -151,7 +151,7 @@
       </div>
     </div>
     <div>
-      <Transition>
+      <Transition :name="tabTransition" mode="out-in">
         <component :is="this.tabs[tab]" :buID="cardDetails.buID"></component>
       </Transition>
     </div>
@@ -171,6 +171,7 @@ export default {
     return {
       tab: null,
       buConfigModals: [Deactivate, null, null, null],
+      tabTransition:'slide-fade',
       readMore: false,
     };
   },
@@ -179,6 +180,11 @@ export default {
       this.readMore = !this.readMore;
       console.log(this.readMore);
     },
+  },
+  watch: {
+    tab(current, old) {
+      (old>current)? this.tabTransition = 'slide-left' : this.tabTransition= 'slide-fade';
+    } 
   },
   computed: {
     ...mapState(useTabsStore, ["tabs"]),
@@ -190,11 +196,10 @@ export default {
 .active-class {
   background-color: white;
   border: 1px solid green;
-  border-bottom: 3px solid green;
+  border-bottom: 3px solid #00696C;
 }
 
 .card-view {
-  position: relative;
   width: 100%;
   height: 173px;
   border: 1px solid #ccc;
@@ -204,21 +209,19 @@ export default {
 
 .tabs-container {
   display: flex;
+  position: absolute;
   flex-direction: column;
   justify-content: flex-end;
-  position: absolute;
-  top: 147px;
-  left: 40px;
+  top: 210px;
+  left: 125px;
   padding: 0px;
 }
 
 .description_container {
   width: 515px;
-  min-width: 300px;
+  min-width: 200px;
   height: 52px;
   border-radius: 8px;
-  margin-left: auto;
-  margin-right: 80px;
   overflow: auto;
   overflow-y: hidden;
   overflow-x: hidden;
@@ -228,21 +231,20 @@ export default {
 
 .description_container_bloom {
   width: 515px;
-  min-width: 300px;
+  min-width: 200px;
   height: 100px;
   border-radius: 8px;
-  margin-left: auto;
+  margin-left: 80px;
   margin-right: 80px;
   overflow: auto;
-  overflow-y: hidden;
-  overflow-x: hidden;
+  
   transition: height 0.2s ease;
 }
 
 .collapse-container {
   width: auto;
-  height: 92px;
   min-width: 300px;
+  height: 92px;
   overflow: hidden;
   padding: 0px 2px 0px 2px;
   display: -webkit-box;
@@ -282,4 +284,44 @@ export default {
   font-weight: 600;
   color: #444747;
 }
+
+.slide-fade-enter-active {
+  transition: all 0.4s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from {
+  transform: translateY(-80px);
+  opacity: 0;
+}
+.slide-fade-leave-to {
+  transform: translateX(80px);
+  opacity: 0;
+}
+
+.slide-left-leave-from {
+  opacity: 1
+}
+.slide-left-leave-to {
+  opacity: 0;
+  transform: translateX(-100px)
+}
+.slide-left-leave-active {
+  transition: all 0.8s ease-out
+}
+
+.slide-left-enter-from {
+  opacity: 0;
+  transform: translateY(-80px)
+}
+
+  
+.slide-left-enter-active {
+  transition: all 0.4s ease-out
+}
+
+
 </style>

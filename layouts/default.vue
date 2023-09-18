@@ -2,7 +2,8 @@
   <v-app dark>
     <v-navigation-drawer
       v-model="drawer"
-      :rail="miniVariant"
+      rail
+      permanent
       rail-width="80"
       app
     >
@@ -32,7 +33,7 @@
     </v-navigation-drawer>
 
     <v-app-bar
-      class="d-flex align-center pl-12 py-2 elevation-0 right-window"
+      class="d-flex align-center pl-9 py-2 elevation-0 right-window"
       style="border-bottom: 1px solid var(--palette-neutral-90, #e1e3e2)"
     >
       <h2 style="font-family: Poppins;">{{ pageTitle }}</h2>
@@ -40,19 +41,19 @@
 
       <v-btn
         variant="outlined"
-        class="border rounded-xl bg-white account_btn"
+        class=" rounded-xl bg-white account_btn mx-2 px-3"
         size="large"
         style="background-color: white"
       >
         <template v-slot:prepend>
-          <v-icon :icon="mdiAccountCircleOutline" size="x-large"></v-icon>
+          <v-icon :icon="mdiAccountCircleOutline" size="31"></v-icon>
         </template>
-        <div class="container">
-          <p style="font-size: 10px">Nivea</p>
-          <p style="font-size: 8px">Keta</p>
+        <div class="container ">
+          <p style="font-size: 14px; font-family: Poppins;  font-weight: 400; height: 16px; ">Nivea</p>
+          <p style="font-size: 10px; font-family: Poppins; font-weight: 400; color: #575757;" >KDW Admin</p>
         </div>
         <template v-slot:append>
-          <v-icon :icon="mdiChevronDown" size="x-large"></v-icon>
+          <v-icon :icon="mdiChevronDown" size="24"></v-icon>
         </template>
       </v-btn>
     </v-app-bar>
@@ -107,8 +108,11 @@ export default {
   display: flex;
   flex-direction: column; 
   align-items: flex-start; 
+  margin-right: 8px;
 }
 .account_btn {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: none;
+  min-height: 48px;
 }
 </style>
