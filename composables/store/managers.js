@@ -13,6 +13,9 @@ export const useManagerStore = defineStore('managers',{
             if(managers_data) {
             return  managers_data;
             }
+            else {
+                return [];
+            }
         }
 
     }

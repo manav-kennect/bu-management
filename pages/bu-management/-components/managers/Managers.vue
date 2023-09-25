@@ -142,7 +142,7 @@ export default {
   methods: {
     ...mapActions(useManagerStore, ["getManagersByBUID"]),
     filterManagers(managerType) {
-      if(this.managersObject) {
+      if(this.managersObject.managers) {
       if (managerType === "All Managers") {
         return [
           ...this.managersObject.managers["adhocManager"],
@@ -153,6 +153,9 @@ export default {
       } else {
         return this.managersObject.managers["employeeManager"];
       }
+    }
+    else {
+      return [];
     }
     },
     viewManager(manager) {
@@ -166,7 +169,7 @@ export default {
   mounted() {
     this.managersObject = this.getManagersByBUID(this.buID);
     this.filteredManagersList = this.filterManagers(this.managerSelector);
-    console.log(this.filteredManagersList);
+    console.log(this.filteredManagersList,"hiiiiiiiiiiiiiiii");
   },
 };
 </script>
