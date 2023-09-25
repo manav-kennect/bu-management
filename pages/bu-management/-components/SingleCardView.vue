@@ -124,6 +124,7 @@
               <component
                 :is="this.buConfigModals[index]"
                 :buName="cardDetails['displayName']"
+                :cardData="cardDetails"
                 @closeDialog="slotProp.closeDialog"
               ></component>
             </template>
@@ -152,7 +153,9 @@
     </div>
     <div>
       <Transition :name="tabTransition" mode="out-in">
+        <KeepAlive>
         <component :is="this.tabs[tab]" :buID="cardDetails.buID"></component>
+      </KeepAlive>
       </Transition>
     </div>
   </div>
@@ -180,6 +183,7 @@ export default {
       this.readMore = !this.readMore;
       console.log(this.readMore);
     },
+    
   },
   watch: {
     tab(current, old) {

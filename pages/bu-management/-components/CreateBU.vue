@@ -41,7 +41,7 @@
             density="compact"
             variant="default"
               single-line
-              class="mt-1 h-10 rounded-lg border text-space "
+              class="mt-1 h-10 pb-10 rounded-lg border text-space "
               v-model="newBu.buID"
             ><template v-slot:label><div class="text-box-label">Enter ID</div></template></v-text-field>
           </div>
@@ -96,6 +96,7 @@ export default {
     font-family: 'Poppins';
     font-weight: 400;
     font-size: 12px;
+    padding-left: 3px;
 }
 
 .text-box-label {
@@ -109,6 +110,17 @@ export default {
     height: 40px;
     font-family: 'Poppins';
 }
+
+.text-space .v-input__control {
+  max-height: 40px;
+
+}
+
+.text-space > .v-input__control > .v-field > .v-field__field > .v-field__input {
+  max-height: 40px;
+  padding-top: 6px;
+}
+
 
 .description-text-space {
     min-height: 80px;

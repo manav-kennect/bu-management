@@ -9,8 +9,10 @@ export const useManagerStore = defineStore('managers',{
     },
     actions: { 
         getManagersByBUID(bu_id) {
-            return  this.managers.find((obj)=>obj.buID === bu_id);
-           
+            let managers_data =  this.managers.find((obj)=>obj.buID === bu_id)
+            if(managers_data) {
+            return  managers_data;
+            }
         }
 
     }

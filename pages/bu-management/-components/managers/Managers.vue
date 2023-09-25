@@ -26,20 +26,22 @@
         </v-row>
         <v-row class="managers-list mt-10">
           <v-card
-            class="ml-0 mr-5 pa-0 w-100 overflow-y-auto manager-list-scroll"
+            class="ml-0 mr-5 pa-0 pl-5 w-100 overflow-y-auto manager-list-scroll"
             elevation="0"
             max-height="50vh"
           >
             <v-list
-              class="pt-0 overflow-y-auto"
+              class="pt-0  overflow-y-auto"
+              width="295"
               v-if="filteredManagersList.length > 0"
             >
               <v-list-item
+              :active-class="'selected-class'"
                 v-for="(manager, i) in filteredManagersList"
                 :key="i"
                 :value="manager"
-                class="rounded-lg pt-2 mb-4"
-                @click="selectedManager(manager)"
+                class=" pt-2 mb-4 "
+                @click="viewManager(manager)"
               >
                 <div class="d-flex flex-row pl-4">
                   <div class="mr-4 align-self-center">
@@ -64,7 +66,7 @@
           </v-card>
         </v-row>
       </v-col>
-      <v-col class="mr-10 bg-tonalbg">
+      <v-col class="mr-10 bg-tonalbg" v-if="selectedManager">
         <v-row>
           <v-col cols="12" class="mt-8">
             <div class="d-flex flex-row justify-space-between pl-4">
@@ -77,9 +79,9 @@
                     class="font-weight-bold"
                     style="font-size:16px'; font-family:'Poppins'"
                   >
-                    Manager Name
+                    {{ selectedManager.name}}
                   </div>
-                  <div class="">item</div>
+                  <div class="text-capitalize">{{ selectedManager.role }}</div>
                 </div>
               </div>
               <div class="d-flex flex-row">
@@ -102,7 +104,14 @@
           </v-col>
           <v-col> </v-col>
         </v-row>
-        <v-row> </v-row>
+        <v-row>
+
+        </v-row>
+      </v-col>
+      <v-col  class="mr-10 " offset="3"  v-else>
+        <div>
+        No Manager Selected
+      </div>
       </v-col>
     </v-row>
   </v-container>
@@ -118,6 +127,7 @@ export default {
     return {
       managerSelector: "All Managers",
       managersObject: {},
+      selectedManager: null,
       filteredManagersList: [],
     };
   },
@@ -132,6 +142,7 @@ export default {
   methods: {
     ...mapActions(useManagerStore, ["getManagersByBUID"]),
     filterManagers(managerType) {
+      if(this.managersObject) {
       if (managerType === "All Managers") {
         return [
           ...this.managersObject.managers["adhocManager"],
@@ -142,9 +153,11 @@ export default {
       } else {
         return this.managersObject.managers["employeeManager"];
       }
+    }
     },
-    selectedManager(manager) {
-      console.log(manager);
+    viewManager(manager) {
+      console.log(manager,"jiiiiiiiiiii")
+      this.selectedManager = manager;
     },
     onSelectItem(item) {
       this.managerSelector = item;
@@ -168,6 +181,10 @@ export default {
 
 .managers-list {
   min-width: inherit;
+}
+
+.selected-class {
+  border-radius:12px
 }
 
 .manager-list-scroll {

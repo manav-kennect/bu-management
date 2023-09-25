@@ -1,7 +1,7 @@
 export function searchFunc(searchText,searchKeys,searchArray) {
     console.log("SEARCH STARTED")
     if (searchText.length === 0) {
-     let filteredArray = searchArray;
+     let filteredArray = [];
       return filteredArray;
     }
     else {

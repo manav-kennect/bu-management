@@ -16,6 +16,6 @@ export const useCardsStore = defineStore('cards',{
         searchCards(seachtext) {
            this.fiteredCardData=searchFunc(seachtext,['buID','displayName'],this.cardsData)
             console.log('INSIDE PININA',this.fiteredCardData)
-        }
+        },
     }
 })

@@ -32,7 +32,7 @@
           <v-btn class="bg-white pl-8 pr-8 rounded-lg btn-style " variant="outlined" @click="this.saveNewBU()">Cancel</v-btn>
         </div>
         <div class="w-10">
-          <v-btn class="bg-bggreen pl-8 pr-8 rounded-lg  btn-style"  @click="this.saveNewBU()">Deactivate</v-btn>
+          <v-btn class="bg-bggreen pl-8 pr-8 rounded-lg  btn-style"  @click="this.deactivateCards()">Deactivate</v-btn>
         </div>
       </div>
     </v-card-actions>
@@ -42,7 +42,7 @@
 <script>
 import {mapActions } from 'pinia'
 export default {
-  props: ["buName"],
+  props: ["buName","cardData"],
   data() {
     return {};
   },
@@ -52,6 +52,10 @@ export default {
       this.addNewBU(this.newBu);
       this.$emit("closeDialog");
     },
+    deactivateCards() {
+      console.log(this.cardData)
+      this.cardData.state = "inactive"
+    }
   },
 };
 </script>

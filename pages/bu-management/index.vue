@@ -7,18 +7,18 @@
       <v-col cols="auto" class="ml-auto pl-auto">
         <v-text-field
           v-model="searchText"
-          central-affix
           density="compact"
           class="rounded-lg border-md search-bar"
-          :variant="'default'"
+          variant="default"
+          central-affix
           single-line
           :hide-details="true"
           :prepend-inner-icon="mdiMagnify"
-          style="box-shadow: none"
           ><template v-slot:label
             ><div class="input-label">Search</div></template
           ></v-text-field
         >
+
       </v-col>
       <v-col cols="auto" align-self="center" class="">
         <v-btn class="bg-btnprimary" elevation="0">
@@ -50,10 +50,11 @@
         </customDialog>
       </v-col>
     </v-row>
-    <v-row
+    <Transition name="fade-container" mode="out-in">
+    <v-row v-if="(searchText.length > 0) && (fiteredCardData.length > 0) || searchText.length===0"
       class="mt-8 ml-lg-0 ml-xl-2 ml-md-5 ml-sm-auto mr-xl-0 mr-lg-3 pl-xl-12"
     >
-      <TransitionGroup name="list" @enter="onEnter" :css="false" @leave="onLeave" @before-enter="onBeforeEnter">
+      <TransitionGroup name="list" mode="out-in" >
         <v-col
           cols="2"
           :sm="3"
@@ -61,14 +62,14 @@
           :lg="2"
           :xl="2"
           class="pl-0 pr-0 ml-lg-9 ml-md-5 ml-xl-2 ml-sm-12 mr-lg-auto mr-xl-auto mt-3"
-          v-for="(card, i) in fiteredCardData.length > 0
+          v-for="(card, i) in (fiteredCardData.length > 0)
             ? fiteredCardData
             : cardsData"
           :key="i"
           :data-index="i"
         >
           <v-card
-            class="mx-auto rounded-lg"
+            class="mx-auto rounded-lg elevation-3"
             width="auto"
             max-width="'600px'"
             min-width="100"
@@ -144,6 +145,8 @@
         </v-col>
       </TransitionGroup>
     </v-row>
+   <v-row v-else class="mt-12 ml-lg-0 ml-xl-2 ml-md-5 ml-sm-auto mr-xl-0 mr-lg-3 pl-xl-12 justify-center"><div>No Results Found!</div></v-row>
+  </Transition>
   </v-container>
   <SingleCardView v-else :cardDetails="this.cardProps" @handleBackButton="handleBackButton"></SingleCardView>
 </Transition>
@@ -162,7 +165,7 @@ export default {
     return {
       opencard: false,
       searchText: "",
-      cardProps: "",
+      cardProps: {},
     };
   },
   computed: {
@@ -218,19 +221,29 @@ export default {
   font-family: "Poppins";
   font-weight: 400;
   font-size: 16px;
-  padding-bottom: 8px;
+  padding-bottom: 5px;
 }
 
 .search-bar {
   width: 372px;
-  min-width: auto;
-  height: 40px;
+  max-height: 40px;
   font-family: "Poppins";
 }
 
 .search-bar .v-field__prepend-inner {
   padding-bottom: 5px;
 }
+
+.search-bar .v-input__control {
+  max-height: 40px;
+
+}
+
+.search-bar > .v-input__control > .v-field > .v-field__field > .v-field__input {
+  max-height: 40px;
+  padding-top: 6px;
+}
+
 
 .card_text {
   color: #747877;
@@ -270,20 +283,42 @@ export default {
 }
 
 
+.list-move,
+.list-enter-active {
+  transition: all 0.5s ease-out;
+}
 
-/* list-enter-active,
+.list-move,
 .list-leave-active {
-  transition: all 0.5s ease;
+  transition: all 0.5s ease-out;
+
 }
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
   transform: translateX(30px);
-} */
+} 
 
-/* .list-enter-to,
+.list-enter-to,
 .list-leave-from {
+  opacity: 1;
+  transform: translateX(-10px);
+}
+
+.fade-container-enter-from ,
+.fade-container-leave-to{
   opacity: 0;
-  transform: translateX(30px);
-} */
+}
+
+.fade-container-enter-to,
+.fade-container-leave-from {
+  opacity: 1;
+}
+
+.fade-container-enter-active,
+.fade-container-leave-active {
+  transition: all 0.4s ease-in;
+}
+
+
 </style>
