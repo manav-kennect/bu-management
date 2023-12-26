@@ -75,7 +75,7 @@
 
 <script>
 import { mapActions } from "pinia";
-import axios from 'axios'
+import axios from 'axios'   
 export default {
   emits: ["closeDialog"],
   data() {
