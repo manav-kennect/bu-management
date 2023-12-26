@@ -7,6 +7,7 @@
       <v-col cols="auto" class="ml-auto pl-auto">
         <v-text-field
           v-model="searchText"
+          cy-data="bu-search"
           density="compact"
           class="rounded-lg border-md search-bar"
           variant="default"
@@ -21,17 +22,32 @@
 
       </v-col>
       <v-col cols="auto" align-self="center" class="">
-        <v-btn class="bg-btnprimary" elevation="0">
+        <v-menu>
+      <template v-slot:activator="{ props }">
+        <v-btn class="bg-btnprimary" data-cy="bu-filter-btn" elevation="0" v-bind="props">
           <div style="text-transform: capitalize; font-weight: bold">
             Filter
           </div>
         </v-btn>
+      </template>
+      <v-list data-cy="bu-filter-options-list">
+        <v-list-item
+          v-for="(item, index) in filterOptns"
+          :key="index"
+          :value="index"
+        >
+          <v-list-item-title :data-cy="'bus-filter-optns-'+index">{{ item }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+       
       </v-col>
       <v-col align-self="center" class="d-flex flex-row-reverse">
         <customDialog :activator="false">
           <template v-slot:toggler="slotProp">
             <v-btn
               class="bg-bggreen rounded-lg"
+              data-cy="create-bu-btn"
               elevation="0"
               v-bind="slotProp.activate"
               ><div style="text-transform: capitalize">Create BU</div>
@@ -52,7 +68,7 @@
     </v-row>
     <Transition name="fade-container" mode="out-in">
     <v-row v-if="(searchText.length > 0) && (fiteredCardData.length > 0) || searchText.length===0"
-      class="mt-8 ml-lg-0 ml-xl-2 ml-md-5 ml-sm-auto mr-xl-0 mr-lg-3 pl-xl-12"
+      class="mt-8 ml-lg-0 ml-xl-2 ml-md-5 ml-sm-auto mr-xl-0 mr-lg-3 pl-xl-12" :data-cy="'bu-list-container'"
     >
       <TransitionGroup name="list" mode="out-in" >
         <v-col
@@ -65,8 +81,8 @@
           v-for="(card, i) in (fiteredCardData.length > 0)
             ? fiteredCardData
             : cardsData"
-          :key="i"
-          :data-index="i"
+            :key="i"
+          
         >
           <v-card
             class="mx-auto rounded-lg elevation-3"
@@ -74,6 +90,7 @@
             max-width="'600px'"
             min-width="100"
             min-height="240"
+            :data-cy="i"
             @click="viewCard(i, card.buID)"
           >
             <div
@@ -145,7 +162,7 @@
         </v-col>
       </TransitionGroup>
     </v-row>
-   <v-row v-else class="mt-12 ml-lg-0 ml-xl-2 ml-md-5 ml-sm-auto mr-xl-0 mr-lg-3 pl-xl-12 justify-center"><div>No Results Found!</div></v-row>
+   <v-row v-else class="mt-12 ml-lg-0 ml-xl-2 ml-md-5 ml-sm-auto mr-xl-0 mr-lg-3 pl-xl-12 justify-center" :data-cy="'bu-list-container'"><div>No Results Found!</div></v-row>
   </Transition>
   </v-container>
   <SingleCardView v-else :cardDetails="this.cardProps" @handleBackButton="handleBackButton"></SingleCardView>
@@ -166,6 +183,7 @@ export default {
       opencard: false,
       searchText: "",
       cardProps: {},
+      filterOptns: ['DisplayName','buID','state','No of Managers']
     };
   },
   computed: {

@@ -30,6 +30,7 @@
               single-line
               :hide-details="true"
               central-affix
+              cy-data="bu-display-name"
               class="mt-1 h-10 rounded-lg border text-space"
               v-model="newBu.displayName"
             ><template v-slot:label><div class="text-box-label"> Enter Display Name</div></template></v-text-field>
@@ -40,6 +41,7 @@
             <v-text-field
             density="compact"
             variant="default"
+            cy-data="bu-unit-id"
               single-line
               class="mt-1 h-10 pb-10 rounded-lg border text-space "
               v-model="newBu.buID"
@@ -52,6 +54,7 @@
             <v-text-field
             variant="default"
               :hide-details="true"
+              cy-data="bu-description"
               single-line
               class="mt-1 rounded-lg border description-text-space"
               v-model="newBu.description"
@@ -63,7 +66,7 @@
     <v-card-actions>
       <div class="d-flex flex-row-reverse w-100 pr-5 pb-5">
         <div class="w-10">
-          <v-btn class="bg-bggreen pl-8 pr-8 rounded-lg" @click="this.saveNewBU()">Save</v-btn>
+          <v-btn data-cy="create-newbu-btn" class="bg-bggreen pl-8 pr-8 rounded-lg" @click="this.saveNewBU()">Save</v-btn>
         </div>
       </div>
     </v-card-actions>
@@ -72,6 +75,7 @@
 
 <script>
 import { mapActions } from "pinia";
+import axios from 'axios'
 export default {
   emits: ["closeDialog"],
   data() {
@@ -81,8 +85,11 @@ export default {
   },
   methods: {
     ...mapActions(useCardsStore, ["addNewBU"]),
-    saveNewBU: function () {
-      this.addNewBU(this.newBu);
+    saveNewBU: async function () {
+      await axios.get('http://localhost:8000/newBu').then(res=>{
+        this.addNewBU(res.data);
+      })
+      
       this.$emit("closeDialog");
     },
   },

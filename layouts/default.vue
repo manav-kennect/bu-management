@@ -36,7 +36,7 @@
       class="d-flex align-center pl-9 py-2 elevation-0 right-window"
       style="border-bottom: 1px solid var(--palette-neutral-90, #e1e3e2)"
     >
-      <h2 style="font-family: Poppins;">{{ pageTitle }}</h2>
+      <h2 style="font-family: Poppins;" class="pagetitle">{{ pageTitle }}</h2>
       <v-spacer />
 
       <v-btn
